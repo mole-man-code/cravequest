@@ -3,13 +3,30 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>FaceOffFood</title>
-<meta name="description" content="Spin, duel, quiz or roll your way to dinner.">
+<title>FaceOffFood | Recipe Games to Decide What to Cook</title>
+<meta name="description" content="Can't decide what to cook? Spin the cuisine wheel, run a food face-off, take the mood quiz or raid your fridge. 84 recipes from 12 cuisines, with XP and badges.">
+<link rel="canonical" href="https://faceofffood.com/">
+<meta name="theme-color" content="#C1121F">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="FaceOffFood">
+<meta property="og:title" content="FaceOffFood | Recipe Games to Decide What to Cook">
+<meta property="og:description" content="Spin the wheel, run a food face-off, take the mood quiz or raid your fridge. Every game ends in a real recipe.">
+<meta property="og:url" content="https://faceofffood.com/">
+<meta property="og:image" content="https://faceofffood.com/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="FaceOffFood | Recipe Games to Decide What to Cook">
+<meta name="twitter:description" content="Spin the wheel, run a food face-off, take the mood quiz or raid your fridge.">
+<meta name="twitter:image" content="https://faceofffood.com/og-image.png">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"FaceOffFood","url":"https://faceofffood.com/","description":"Recipe games that help you decide what to cook: a cuisine wheel, food face-offs, a mood quiz, dinner dice and a fridge search."}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,700;8..60,900&family=Source+Sans+3:wght@400;600;700&display=swap">
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+<noscript><p style="padding:16px;font:17px/1.5 sans-serif">FaceOffFood needs JavaScript to run its recipe games. Turn it on in your browser to spin the wheel, play a face-off, take the mood quiz, roll the dice or search by what is in your fridge.</p></noscript>
 <div class="wrap">
   <header class="top">
     <div class="brand">FaceOff<i>Food</i></div>
@@ -22,7 +39,7 @@
   <section class="hero">
     <div>
       <h1>Can't decide what to cook? <em>Let's play.</em></h1>
-      <p>Spin, duel, quiz or roll your way to dinner. Every game ends in a tested recipe, and every dish you cook earns points toward your next rank.</p>
+      <p>Spin, duel, quiz or roll your way to dinner. Every game ends in a real recipe, and every dish you cook earns points toward your next rank.</p>
       <div class="tabs" role="tablist" id="tabs">
         <button class="tab" role="tab" data-g="wheel" aria-selected="true">Cuisine Wheel</button>
         <button class="tab" role="tab" data-g="duel" aria-selected="false">Face-off</button>
@@ -51,6 +68,7 @@
     </div>
     <div class="grid" id="grid"></div>
   </section>
+  <footer class="foot"><a href="recipes/">Browse all recipes</a></footer>
 </div>
 
 <dialog id="dlg"><div class="dbody" id="dbody"></div></dialog>

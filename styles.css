@@ -126,3 +126,18 @@ dialog::backdrop{background:rgba(10,10,10,.65)}
 .fh{font-size:1.4rem;font-weight:900;margin:22px 0 12px;padding-bottom:8px;border-bottom:1px solid var(--ink)}
 .need{font-size:.85rem;color:var(--muted)}
 .need b{color:var(--red);font-weight:700}
+.brand{color:inherit;text-decoration:none}
+.topnav{display:flex;gap:18px;font-weight:700;font-size:.78rem;letter-spacing:.1em;text-transform:uppercase}
+.topnav a,.crumbs a,.foot a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--line)}
+.topnav a:hover,.crumbs a:hover,.foot a:hover{border-bottom-color:var(--red)}
+.rpage{max-width:720px;padding-block:28px 8px;display:flex;flex-direction:column;gap:14px}
+.rpage.wide{max-width:none}
+.rpage h1{font-size:clamp(2.2rem,6vw,3.6rem);font-weight:900;letter-spacing:-.02em}
+.rpage h2.rh{font:700 .74rem/1 var(--sans);text-transform:uppercase;letter-spacing:.14em;color:var(--red);margin-top:12px}
+.crumbs{font-size:.85rem;color:var(--muted);margin:0}
+a.rc{text-decoration:none;color:inherit}
+.cta{background:var(--red);color:var(--on-red);padding:24px 26px;border-radius:4px;display:flex;flex-direction:column;gap:10px;align-items:flex-start;margin-top:16px}
+.cta h2{font-size:1.6rem;font-weight:900}
+.cta p{margin:0}
+.cta .btn{background:var(--on-red);color:var(--red);text-decoration:none;display:inline-block}
+.foot{padding-block:40px 8px;font-size:.85rem;color:var(--muted)}

@@ -13,6 +13,7 @@ const BADGES=[
  ["Globe Trotter","Cook 3 cuisines",s=>new Set(Object.keys(s.cooked).map(i=>RB[i]&&RB[i].c).filter(Boolean)).size>=3],
  ["Kitchen Regular","Cook 5 recipes",s=>Object.keys(s.cooked).length>=5]
 ];
+let PAGES={};
 let S={xp:0,cooked:{},plays:{wheel:0,duel:0,quiz:0,dice:0,fridge:0},badges:{}};
 try{const x=JSON.parse(localStorage.getItem("cq1")||"null");if(x)S={...S,...x,plays:{...S.plays,...x.plays}}}catch(e){}
 const saveLocal=()=>{try{localStorage.setItem("cq1",JSON.stringify(S))}catch(e){}};
@@ -51,6 +52,7 @@ function openRecipe(r){
   <h3>Why this recipe works</h3><p class="why">${r.w}</p>
   <h3>Ingredients</h3><ul class="ing">${r.i.map((x,k)=>`<li><label><input type="checkbox" id="ing${k}"><span>${x}</span></label></li>`).join("")}</ul>
   <h3>Method</h3><ol class="steps">${r.s.map(x=>`<li><span>${x}</span></li>`).join("")}</ol>
+  ${PAGES[r.id]?`<a class="link" href="recipes/${PAGES[r.id]}/">Open the full recipe page</a>`:""}
   <button class="btn" id="dcook" ${done?"disabled":""}>${done?"Cooked. Nice work":"I cooked this (+50 XP)"}</button>`;
   $("dx").onclick=()=>$("dlg").close();
   $("dcook").onclick=()=>{S.cooked[r.id]=1;$("dlg").close();award(50,"for cooking "+r.n)};
@@ -166,11 +168,11 @@ function roll(){
 
 /* Fridge Raid */
 const FRIDGE=[
- ["Protein",[["Chicken",/chicken/],["Beef",/\bbeef\b|steak|sirloin|ribeye|flank/],["Pork",/\bpork\b/],["Sausage",/sausage/],["Ham",/\bham\b/],["Salmon",/salmon/],["Shrimp",/shrimp/],["Mussels",/mussel/],["Eggs",/\beggs?\b/],["Tofu",/tofu/],["Paneer",/paneer/]]],
- ["Vegetables",[["Onion",/\bonions?\b/],["Scallions",/scallion/],["Shallot",/shallot/],["Garlic",/garlic/],["Ginger",/ginger/],["Tomatoes",/tomato/],["Potatoes",/potato/],["Carrot",/carrot/],["Cabbage",/cabbage/],["Bell pepper",/\b(bell )?peppers?\b/],["Zucchini",/zucchini/],["Eggplant",/eggplant/],["Cucumber",/cucumber/],["Spinach",/spinach/],["Mushrooms",/mushroom|shiitake/],["Broccoli",/broccoli/],["Lettuce",/lettuce/],["Bean sprouts",/sprouts/],["Peas",/\bpeas\b/],["Chilies",/\bchil(i|ie|e)s?\b/],["Avocado",/avocado/],["Olives",/\bolives?\b/],["Pickles",/\bpickles\b/]]],
+ ["Protein",[["Chicken",/chicken/],["Beef",/\bbeef\b|steak|sirloin|ribeye|flank/],["Pork",/\bpork\b/],["Sausage",/sausage/],["Ham",/\bham\b/],["Salmon",/salmon/],["Shrimp",/shrimp/],["Mussels",/mussel/],["Eggs",/\beggs?\b/],["Tofu",/tofu/],["Paneer",/paneer/],["Tuna",/\btuna\b/],["White fish",/white fish|\b(cod|tilapia|halibut|haddock)\b/]]],
+ ["Vegetables",[["Onion",/\bonions?\b/],["Scallions",/scallion/],["Shallot",/shallot/],["Garlic",/garlic/],["Ginger",/ginger/],["Tomatoes",/tomato/],["Potatoes",/potato/],["Carrot",/carrot/],["Cabbage",/cabbage/],["Bell pepper",/\b(bell )?peppers?\b/],["Zucchini",/zucchini/],["Celery",/celery/],["Cauliflower",/cauliflower/],["Corn",/\bcorn\b/],["Green beans",/green beans?/],["Eggplant",/eggplant/],["Cucumber",/cucumber/],["Spinach",/spinach/],["Mushrooms",/mushroom|shiitake/],["Broccoli",/broccoli/],["Lettuce",/lettuce/],["Bean sprouts",/sprouts/],["Peas",/\bpeas\b/],["Chilies",/\bchil(i|ie|e)s?\b/],["Avocado",/avocado/],["Olives",/\bolives?\b/],["Pickles",/\bpickles\b/]]],
  ["Herbs and fruit",[["Lemon",/lemon(?!grass)/],["Lime",/\blime/],["Orange",/orange/],["Cilantro",/cilantro/],["Parsley",/parsley/],["Basil",/basil/],["Mint",/\bmint\b/],["Thyme",/thyme/],["Lemongrass",/lemongrass/]]],
- ["Dairy",[["Milk",/\bmilk\b/],["Cream",/\bcream\b/],["Butter",/\bbutter\b/],["Yogurt",/yogurt/],["Parmesan or pecorino",/parmesan|pecorino/],["Feta or cotija",/feta|cotija/],["Melting cheese",/cheddar|gruy|cheese/]]],
- ["Pantry",[["Rice",/\brice\b/],["Pasta",/pasta|spaghetti|rigatoni|macaroni|orzo/],["Noodles",/noodle|udon|vermicelli/],["Rice paper",/ricepaper/],["Tortillas",/tortilla/],["Bread or buns",/bread|baguette|\bbuns?\b|pita/],["Breadcrumbs",/panko/],["Chickpeas",/chickpea/],["Black beans",/black bean/],["Kidney beans",/kidney bean/],["Refried beans",/refried/],["Lentils",/lentil/],["Coconut milk",/coconutmilk/],["Stock",/\bstock\b|dashi/],["Peanuts",/peanut/],["Soy sauce",/\bsoy\b/],["Fish sauce",/fish sauce/],["Oyster sauce",/oyster sauce/],["Gochujang",/gochujang/],["Curry paste or roux",/curry paste|roux/],["Chili bean paste",/doubanjiang/],["Miso",/miso/],["Kimchi",/kimchi/],["Salsa",/salsa/],["Chipotle in adobo",/chipotle/],["Tahini",/tahini/],["Tzatziki",/tzatziki/],["Mayonnaise",/mayo/],["Mustard",/mustard/],["Wine",/\bwine\b/],["Capers",/caper/]]]
+ ["Dairy",[["Milk",/\bmilk\b/],["Cream",/\bcream\b/],["Butter",/\bbutter\b/],["Yogurt",/yogurt/],["Parmesan or pecorino",/parmesan|pecorino/],["Feta or cotija",/feta|cotija/],["Melting cheese",/cheddar|gruy|cheese|mozzarella/]]],
+ ["Pantry",[["Rice",/\brice\b/],["Pasta",/pasta|spaghetti|rigatoni|macaroni|orzo/],["Noodles",/noodle|udon|vermicelli/],["Rice paper",/ricepaper/],["Tortillas",/tortilla/],["Bread or buns",/bread|baguette|\bbuns?\b|pita/],["Breadcrumbs",/panko/],["Chickpeas",/chickpea/],["Black beans",/black bean/],["Kidney beans",/kidney bean/],["White beans",/cannellini|white bean/],["Refried beans",/refried/],["Lentils",/lentil/],["Coconut milk",/coconutmilk/],["Stock",/\bstock\b|dashi/],["Peanuts",/peanut/],["Soy sauce",/\bsoy\b/],["Fish sauce",/fish sauce/],["Oyster sauce",/oyster sauce/],["Gochujang",/gochujang/],["Curry paste or roux",/curry paste|roux/],["Chili bean paste",/doubanjiang/],["Miso",/miso/],["Kimchi",/kimchi/],["Salsa",/salsa|enchilada sauce/],["Chipotle in adobo",/chipotle/],["Tahini",/tahini/],["Tzatziki",/tzatziki/],["Mayonnaise",/mayo/],["Mustard",/mustard/],["Wine",/\bwine\b/],["Capers",/caper/],["Pizza dough",/pizza dough/],["Grits",/\bgrits\b/],["Tamarind",/tamarind/]]]
 ];
 const FLAT={};FRIDGE.forEach(g=>g[1].forEach(i=>FLAT[i[0]]=i[1]));
 let fridge=new Set();
@@ -183,7 +185,10 @@ function normIng(line){
     .replace(/rice paper( wrappers?)?/g,"ricepaper")
     .replace(/rice (noodles|vermicelli)/g,"noodles")
     .replace(/(rice|red wine|white wine) vinegar|rice wine/g,"vinegar")
-    .replace(/potato buns?/g,"buns");
+    .replace(/potato buns?/g,"buns")
+    .replace(/corn tortillas?/g,"tortillas")
+    .replace(/sweet potato (starch )?noodles/g,"noodles")
+    .replace(/water or stock/g,"water");
 }
 /* Each recipe becomes a list of requirements. A requirement is satisfied if you have any tag in it
    (a line like "pork or mushrooms" is one requirement with two tags). */
@@ -362,6 +367,7 @@ $("rform").onsubmit=async e=>{
 
 (async()=>{
   await loadRecipes();
+  try{const m=await fetch("recipes/manifest.json");if(m.ok)PAGES=await m.json()}catch(e){}
   renderHud();gWheel();renderAuth();
   if(sb){
     sb.auth.onAuthStateChange((ev,session)=>{
