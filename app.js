@@ -8,11 +8,12 @@ const BADGES=[
  ["Face-off Finalist","Crown a dish",s=>s.plays.duel>0],
  ["Mood Reader","Finish the quiz",s=>s.plays.quiz>0],
  ["Dice Roller","Roll dinner",s=>s.plays.dice>0],
+ ["Fridge Raider","Search by your ingredients",s=>s.plays.fridge>0],
  ["First Cook","Cook any recipe",s=>Object.keys(s.cooked).length>0],
  ["Globe Trotter","Cook 3 cuisines",s=>new Set(Object.keys(s.cooked).map(i=>RB[i]&&RB[i].c).filter(Boolean)).size>=3],
  ["Kitchen Regular","Cook 5 recipes",s=>Object.keys(s.cooked).length>=5]
 ];
-let S={xp:0,cooked:{},plays:{wheel:0,duel:0,quiz:0,dice:0},badges:{}};
+let S={xp:0,cooked:{},plays:{wheel:0,duel:0,quiz:0,dice:0,fridge:0},badges:{}};
 try{const x=JSON.parse(localStorage.getItem("cq1")||"null");if(x)S={...S,...x,plays:{...S.plays,...x.plays}}}catch(e){}
 const saveLocal=()=>{try{localStorage.setItem("cq1",JSON.stringify(S))}catch(e){}};
 const save=()=>{saveLocal();pushState()};
@@ -60,7 +61,8 @@ $("dlg").addEventListener("click",e=>{if(e.target===$("dlg"))$("dlg").close()});
 const stage=$("stage");
 function setGame(g){
   document.querySelectorAll(".tab").forEach(t=>t.setAttribute("aria-selected",t.dataset.g===g));
-  ({wheel:gWheel,duel:gDuel,quiz:gQuiz,dice:gDice})[g]();
+  stage.classList.toggle("fridge",g==="fridge");
+  ({wheel:gWheel,duel:gDuel,quiz:gQuiz,dice:gDice,fridge:gFridge})[g]();
 }
 $("tabs").onclick=e=>{const b=e.target.closest(".tab");if(b)setGame(b.dataset.g)};
 
@@ -162,6 +164,90 @@ function roll(){
   },90);
 }
 
+/* Fridge Raid */
+const FRIDGE=[
+ ["Protein",[["Chicken",/chicken/],["Beef",/\bbeef\b|steak|sirloin|ribeye|flank/],["Pork",/\bpork\b/],["Sausage",/sausage/],["Ham",/\bham\b/],["Salmon",/salmon/],["Shrimp",/shrimp/],["Mussels",/mussel/],["Eggs",/\beggs?\b/],["Tofu",/tofu/],["Paneer",/paneer/]]],
+ ["Vegetables",[["Onion",/\bonions?\b/],["Scallions",/scallion/],["Shallot",/shallot/],["Garlic",/garlic/],["Ginger",/ginger/],["Tomatoes",/tomato/],["Potatoes",/potato/],["Carrot",/carrot/],["Cabbage",/cabbage/],["Bell pepper",/\b(bell )?peppers?\b/],["Zucchini",/zucchini/],["Eggplant",/eggplant/],["Cucumber",/cucumber/],["Spinach",/spinach/],["Mushrooms",/mushroom|shiitake/],["Broccoli",/broccoli/],["Lettuce",/lettuce/],["Bean sprouts",/sprouts/],["Peas",/\bpeas\b/],["Chilies",/\bchil(i|ie|e)s?\b/],["Avocado",/avocado/],["Olives",/\bolives?\b/],["Pickles",/\bpickles\b/]]],
+ ["Herbs and fruit",[["Lemon",/lemon(?!grass)/],["Lime",/\blime/],["Orange",/orange/],["Cilantro",/cilantro/],["Parsley",/parsley/],["Basil",/basil/],["Mint",/\bmint\b/],["Thyme",/thyme/],["Lemongrass",/lemongrass/]]],
+ ["Dairy",[["Milk",/\bmilk\b/],["Cream",/\bcream\b/],["Butter",/\bbutter\b/],["Yogurt",/yogurt/],["Parmesan or pecorino",/parmesan|pecorino/],["Feta or cotija",/feta|cotija/],["Melting cheese",/cheddar|gruy|cheese/]]],
+ ["Pantry",[["Rice",/\brice\b/],["Pasta",/pasta|spaghetti|rigatoni|macaroni|orzo/],["Noodles",/noodle|udon|vermicelli/],["Rice paper",/ricepaper/],["Tortillas",/tortilla/],["Bread or buns",/bread|baguette|\bbuns?\b|pita/],["Breadcrumbs",/panko/],["Chickpeas",/chickpea/],["Black beans",/black bean/],["Kidney beans",/kidney bean/],["Refried beans",/refried/],["Lentils",/lentil/],["Coconut milk",/coconutmilk/],["Stock",/\bstock\b|dashi/],["Peanuts",/peanut/],["Soy sauce",/\bsoy\b/],["Fish sauce",/fish sauce/],["Oyster sauce",/oyster sauce/],["Gochujang",/gochujang/],["Curry paste or roux",/curry paste|roux/],["Chili bean paste",/doubanjiang/],["Miso",/miso/],["Kimchi",/kimchi/],["Salsa",/salsa/],["Chipotle in adobo",/chipotle/],["Tahini",/tahini/],["Tzatziki",/tzatziki/],["Mayonnaise",/mayo/],["Mustard",/mustard/],["Wine",/\bwine\b/],["Capers",/caper/]]]
+];
+const FLAT={};FRIDGE.forEach(g=>g[1].forEach(i=>FLAT[i[0]]=i[1]));
+let fridge=new Set();
+function normIng(line){
+  return line.toLowerCase()
+    .replace(/(beef|chicken|vegetable) stock/g,"stock")
+    .replace(/red pepper flakes|peppercorns?|black pepper|chili powder|chili flakes|mustard powder/g,"")
+    .replace(/olive oil|sesame oil/g,"oil")
+    .replace(/coconut milk/g,"coconutmilk")
+    .replace(/rice paper( wrappers?)?/g,"ricepaper")
+    .replace(/rice (noodles|vermicelli)/g,"noodles")
+    .replace(/(rice|red wine|white wine) vinegar|rice wine/g,"vinegar")
+    .replace(/potato buns?/g,"buns");
+}
+/* Each recipe becomes a list of requirements. A requirement is satisfied if you have any tag in it
+   (a line like "pork or mushrooms" is one requirement with two tags). */
+function reqGroups(r){
+  if(r._req)return r._req;
+  const groups=[];
+  r.i.forEach(line=>{
+    const n=normIng(line),tags=Object.keys(FLAT).filter(l=>FLAT[l].test(n));
+    if(!tags.length)return;
+    if(/ or /.test(n))groups.push(tags);
+    else tags.forEach(t=>{if(!groups.some(g=>g.length===1&&g[0]===t))groups.push([t])});
+  });
+  return r._req=groups;
+}
+function fridgeMatches(have){
+  return R.map(r=>{
+    const g=reqGroups(r),miss=g.filter(x=>!x.some(t=>have.has(t)));
+    return {r,total:g.length,hit:g.length-miss.length,miss};
+  }).filter(x=>x.hit>0&&x.hit*2>=x.total).sort((a,b)=>a.miss.length-b.miss.length||b.hit-a.hit||a.r.t-b.r.t);
+}
+function gFridge(){
+  fridge=new Set(S.fridge||[]);
+  stage.innerHTML=`<h2>Raid the fridge</h2>
+  <p class="hint">Tap what you have. We assume salt, pepper, oil, sugar, flour and common dried spices.</p>
+  <input id="fq" type="search" class="afield" placeholder="Filter items" aria-label="Filter items">
+  <div class="fridge-list" id="flist"></div>
+  <div class="frow"><button class="btn" id="ffind">Find recipes</button><button class="btn ghost" id="fclear">Clear</button><span class="hint" id="fcount"></span></div>`;
+  fridgeChips();
+  $("fq").oninput=fridgeChips;
+  $("flist").onclick=e=>{
+    const b=e.target.closest(".fchip");if(!b)return;
+    const k=b.dataset.k;fridge.has(k)?fridge.delete(k):fridge.add(k);
+    b.setAttribute("aria-pressed",fridge.has(k));fridgeCount();
+    S.fridge=[...fridge];saveLocal();
+  };
+  $("fclear").onclick=()=>{fridge.clear();S.fridge=[];saveLocal();fridgeChips();$("result").hidden=true};
+  $("ffind").onclick=fridgeFind;
+}
+function fridgeCount(){$("fcount").textContent=fridge.size?fridge.size+" selected":"Nothing selected yet"}
+function fridgeChips(){
+  const q=$("fq").value.trim().toLowerCase();
+  $("flist").innerHTML=FRIDGE.map(g=>{
+    const items=g[1].filter(i=>!q||i[0].toLowerCase().includes(q));
+    return items.length?`<div class="fgroup"><h4>${g[0]}</h4><div class="fchips">${items.map(i=>`<button class="fchip" data-k="${i[0]}" aria-pressed="${fridge.has(i[0])}">${i[0]}</button>`).join("")}</div></div>`:"";
+  }).join("")||`<p class="hint">No items match. Try a different word.</p>`;
+  fridgeCount();
+}
+function fridgeFind(){
+  const el=$("result");el.hidden=false;
+  if(fridge.size<1){el.innerHTML=`<div class="fr"><p class="hint">Pick at least one item first. A protein and a vegetable is a good start.</p></div>`;return}
+  const rows=fridgeMatches(fridge);
+  const ready=rows.filter(x=>!x.miss.length),near=rows.filter(x=>x.miss.length>=1&&x.miss.length<=2),shop=rows.filter(x=>x.miss.length>=3&&x.miss.length<=4).slice(0,6);
+  const card=x=>`<button class="rc" data-id="${x.r.id}"><span class="cu">${x.r.c}</span><h3>${x.r.n}</h3>
+    <span class="need">${x.miss.length?"Need: <b>"+x.miss.map(m=>m.join(" or ")).join(", ")+"</b>":"You have everything"}</span>
+    <span class="m"><span>You have ${x.hit} of ${x.total}</span><span>${x.r.t} min</span>${S.cooked[x.r.id]?'<span class="done">Cooked</span>':""}</span></button>`;
+  const sec=(t,l)=>l.length?`<h3 class="fh">${t}</h3><div class="grid">${l.map(card).join("")}</div>`:"";
+  el.innerHTML=`<div class="fr"><span class="kick">Fridge Raid results</span>`+
+    (ready.length+near.length+shop.length?sec("Cook it now",ready)+sec("Missing one or two things",near)+sec("Worth a small shop",shop)
+      :`<p class="hint">Nothing matches closely yet. Add a few more items and try again.</p>`)+`</div>`;
+  el.scrollIntoView({behavior:"smooth",block:"nearest"});
+  S.plays.fridge++;award(10,"for raiding the fridge");
+}
+$("result").addEventListener("click",e=>{const b=e.target.closest(".rc");if(b)openRecipe(RB[b.dataset.id])});
+
 /* Library */
 let fc=null;
 function renderGrid(){
@@ -180,7 +266,7 @@ const CFG=window.CQ_CONFIG||{};
 const sb=(CFG.SUPABASE_URL&&CFG.SUPABASE_ANON_KEY&&!/YOUR-/.test(CFG.SUPABASE_URL)&&window.supabase)
   ?window.supabase.createClient(CFG.SUPABASE_URL,CFG.SUPABASE_ANON_KEY):null;
 let user=null,pushT;
-const FRESH=()=>({xp:0,cooked:{},plays:{wheel:0,duel:0,quiz:0,dice:0},badges:{}});
+const FRESH=()=>({xp:0,cooked:{},plays:{wheel:0,duel:0,quiz:0,dice:0,fridge:0},badges:{}});
 const rowToRecipe=d=>({id:d.id,n:d.name,c:d.cuisine,p:d.protein,t:d.minutes,e:d.effort,v:d.vibes||[],veg:d.vegetarian,w:d.why||"",i:d.ingredients,s:d.steps});
 
 async function loadRecipes(){

@@ -35,6 +35,7 @@ Any static host works. For GitHub Pages: push this folder to a repository, then 
 
 ## How it works
 
+- **Fridge Raid** (fifth game tab) matches what you pick against each recipe's ingredient list. The ingredient names it recognizes live in the `FRIDGE` list in `app.js`; add a new pantry item there if you introduce an ingredient it does not know. Salt, pepper, oil, sugar, flour and common dried spices are assumed. The fridge selection is saved in the browser only.
 - `recipes` is a public, read-only table. Add or edit recipes in the Table Editor and they appear on the site.
 - `player_state` holds one private row per user (XP, cooked recipes, play counts, badges). Row Level Security means a signed-in user can only read and write their own row.
 - When a signed-in user has progress both locally and in the cloud, the two are merged: highest XP, union of cooked recipes and badges.
