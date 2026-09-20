@@ -1,4 +1,4 @@
-# Crave Quest
+# FaceOff Food
 
 A gamified recipe site: spin a cuisine wheel, run a food face-off, take a mood quiz or roll dinner dice, then cook the recipe you land on. Playing and cooking earns XP, ranks and badges.
 
