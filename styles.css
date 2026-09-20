@@ -109,20 +109,3 @@ dialog::backdrop{background:rgba(10,10,10,.65)}
 .right{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
 .btn.small{padding:7px 14px;font-size:.72rem}
 .afield{font:inherit;padding:11px 14px;border:1px solid var(--ink);border-radius:2px;background:var(--bg);color:var(--ink)}
-.alinks{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
-.link{border:0;background:none;padding:0;color:var(--red);font-weight:600;font-size:.88rem;text-decoration:underline}
-.stage.fridge{justify-content:flex-start;align-items:stretch;text-align:left}
-.stage.fridge h2{text-align:center}
-.stage.fridge .hint{text-align:center}
-.fridge-list{overflow-y:auto;max-height:300px;border:1px solid var(--line);padding:4px 12px 12px;background:var(--bg);border-radius:2px}
-.fgroup h4{font:700 .7rem/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--red);margin:14px 0 8px}
-.fchips{display:flex;flex-wrap:wrap;gap:6px}
-.fchip{border:1px solid var(--line);background:var(--surface);border-radius:2px;padding:5px 10px;font-size:.85rem}
-.fchip:hover{border-color:var(--ink)}
-.fchip[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
-.frow{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
-.fr{margin-top:8px}
-.fr .kick{display:block;margin-bottom:6px}
-.fh{font-size:1.4rem;font-weight:900;margin:22px 0 12px;padding-bottom:8px;border-bottom:1px solid var(--ink)}
-.need{font-size:.85rem;color:var(--muted)}
-.need b{color:var(--red);font-weight:700}
