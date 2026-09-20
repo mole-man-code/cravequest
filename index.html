@@ -28,6 +28,7 @@
         <button class="tab" role="tab" data-g="duel" aria-selected="false">Face-off</button>
         <button class="tab" role="tab" data-g="quiz" aria-selected="false">Mood Quiz</button>
         <button class="tab" role="tab" data-g="dice" aria-selected="false">Dinner Dice</button>
+        <button class="tab" role="tab" data-g="fridge" aria-selected="false">Fridge Raid</button>
       </div>
     </div>
     <div class="stage" id="stage"></div>
@@ -54,12 +55,22 @@
 
 <dialog id="dlg"><div class="dbody" id="dbody"></div></dialog>
 <dialog id="adlg"><form class="dbody" id="aform" method="dialog">
-  <div class="dhead"><h2 style="font-size:1.6rem">Sign in</h2><button type="button" class="btn ghost small" id="aclose">Close</button></div>
-  <p class="hint">Enter your email and we'll send a sign-in link. Your XP, badges and cooked recipes will follow you to any device.</p>
+  <div class="dhead"><h2 id="atitle" style="font-size:1.6rem">Sign in</h2><button type="button" class="btn ghost small" id="aclose">Close</button></div>
+  <p class="hint">Your XP, badges and cooked recipes follow you to any device.</p>
   <label for="email" class="kick">Email</label>
   <input id="email" name="email" type="email" required autocomplete="email" placeholder="you@example.com" class="afield">
-  <button class="btn" id="asend" type="submit">Send sign-in link</button>
+  <label for="password" class="kick">Password</label>
+  <input id="password" name="password" type="password" required minlength="8" autocomplete="current-password" placeholder="At least 8 characters" class="afield">
+  <button class="btn" id="asend" type="submit">Sign in</button>
+  <div class="alinks"><button type="button" class="link" id="atoggle">New here? Create an account</button><button type="button" class="link" id="aforgot">Forgot password?</button></div>
   <p class="hint" id="amsg" role="status"></p>
+</form></dialog>
+<dialog id="rdlg"><form class="dbody" id="rform" method="dialog">
+  <div class="dhead"><h2 style="font-size:1.6rem">Set a new password</h2><button type="button" class="btn ghost small" id="rclose">Close</button></div>
+  <label for="newpw" class="kick">New password</label>
+  <input id="newpw" name="newpw" type="password" required minlength="8" autocomplete="new-password" placeholder="At least 8 characters" class="afield">
+  <button class="btn" id="rsend" type="submit">Save password</button>
+  <p class="hint" id="rmsg" role="status"></p>
 </form></dialog>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
