@@ -109,3 +109,5 @@ dialog::backdrop{background:rgba(10,10,10,.65)}
 .right{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
 .btn.small{padding:7px 14px;font-size:.72rem}
 .afield{font:inherit;padding:11px 14px;border:1px solid var(--ink);border-radius:2px;background:var(--bg);color:var(--ink)}
+.alinks{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.link{border:0;background:none;padding:0;color:var(--red);font-weight:600;font-size:.88rem;text-decoration:underline}

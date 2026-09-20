@@ -65,7 +65,7 @@ function setGame(g){
 $("tabs").onclick=e=>{const b=e.target.closest(".tab");if(b)setGame(b.dataset.g)};
 
 /* Wheel */
-const WC=["#B3121D","#2B2B2B","#B8770B","#2F6B3F","#7A2E2E","#1F4E6B","#8A5A12","#4A4A4A"];
+const WC=["#B3121D","#2B2B2B","#A86A00","#2F6B3F","#7A2E2E","#1F4E6B","#6B3FA0","#0F6B6B","#A23B72","#5A6B1F","#8A4B12","#4A4A4A"];
 let rot=0,spinning=false;
 function gWheel(){
   stage.innerHTML=`<h2>Spin for a cuisine</h2><div class="wheelbox"><div class="pin"></div><canvas id="cv" width="680" height="680" aria-label="Cuisine wheel"></canvas></div><button class="btn" id="spin">Spin</button><p class="hint">Land on a cuisine, get a dish from it. +10 XP.</p>`;
@@ -77,7 +77,7 @@ function drawWheel(){
   for(let i=0;i<n;i++){
     x.beginPath();x.moveTo(c,c);x.arc(c,c,c-6,rot+i*sg,rot+(i+1)*sg);x.closePath();
     x.fillStyle=WC[i];x.fill();x.lineWidth=4;x.strokeStyle="#fff";x.stroke();
-    x.save();x.translate(c,c);x.rotate(rot+(i+.5)*sg);x.fillStyle="#fff";x.font="700 34px 'Source Sans 3',sans-serif";x.textAlign="right";x.textBaseline="middle";x.fillText(CU[i],c-40,0);x.restore();
+    x.save();x.translate(c,c);x.rotate(rot+(i+.5)*sg);x.fillStyle="#fff";x.font="700 30px 'Source Sans 3',sans-serif";x.textAlign="right";x.textBaseline="middle";x.fillText(CU[i],c-40,0);x.restore();
   }
   x.beginPath();x.arc(c,c,30,0,7);x.fillStyle="#1B1B1B";x.fill();
 }
@@ -216,19 +216,62 @@ function renderAuth(){
   b.textContent=user?"Sign out":"Sign in";
   b.title=user?(user.email||""):"Save your progress across devices";
 }
+let amode="in";
+const HOME=location.href.split("#")[0].split("?")[0];
+function setMode(m){
+  amode=m;
+  $("atitle").textContent=m==="in"?"Sign in":"Create account";
+  $("asend").textContent=m==="in"?"Sign in":"Create account";
+  $("atoggle").textContent=m==="in"?"New here? Create an account":"Have an account? Sign in";
+  $("aforgot").hidden=m!=="in";
+  $("password").autocomplete=m==="in"?"current-password":"new-password";
+  $("amsg").textContent="";
+}
+function friendly(err){
+  const m=(err.message||"").toLowerCase();
+  if(m.includes("invalid login"))return "Wrong email or password.";
+  if(m.includes("not confirmed"))return "Please confirm your email first. Check your inbox for the link.";
+  if(m.includes("rate limit"))return "Too many emails sent recently. Wait a while and try again.";
+  return "That did not work: "+err.message;
+}
 $("auth").onclick=()=>{
   if(user){sb.auth.signOut();return}
-  $("amsg").textContent="";$("adlg").showModal();
+  setMode("in");$("adlg").showModal();
 };
 $("aclose").onclick=()=>$("adlg").close();
 $("adlg").addEventListener("click",e=>{if(e.target===$("adlg"))$("adlg").close()});
+$("atoggle").onclick=()=>setMode(amode==="in"?"up":"in");
+$("aforgot").onclick=async()=>{
+  const email=$("email").value.trim();
+  if(!email){$("amsg").textContent="Enter your email above, then click Forgot password.";return}
+  $("amsg").textContent="Sending...";
+  const {error}=await sb.auth.resetPasswordForEmail(email,{redirectTo:HOME});
+  $("amsg").textContent=error?friendly(error):"If that email has an account, a reset link is on its way.";
+};
 $("aform").onsubmit=async e=>{
   e.preventDefault();
-  const email=$("email").value.trim();if(!email)return;
-  $("asend").disabled=true;$("amsg").textContent="Sending...";
-  const {error}=await sb.auth.signInWithOtp({email,options:{emailRedirectTo:location.href.split("#")[0]}});
+  const email=$("email").value.trim(),password=$("password").value;
+  if(!email||!password)return;
+  $("asend").disabled=true;$("amsg").textContent="One moment...";
+  const res=amode==="up"
+    ?await sb.auth.signUp({email,password,options:{emailRedirectTo:HOME}})
+    :await sb.auth.signInWithPassword({email,password});
   $("asend").disabled=false;
-  $("amsg").textContent=error?"That did not work: "+error.message:"Check your email for a sign-in link.";
+  const {data,error}=res;
+  if(error){$("amsg").textContent=friendly(error);return}
+  if(amode==="up"&&data.user&&data.user.identities&&data.user.identities.length===0){
+    $("amsg").textContent="An account with that email already exists. Try signing in.";return}
+  if(data.session){$("password").value="";$("adlg").close();toast("Signed in")}
+  else $("amsg").textContent="Almost done. Check your email and click the link to confirm your account, then sign in.";
+};
+$("rclose").onclick=()=>$("rdlg").close();
+$("rform").onsubmit=async e=>{
+  e.preventDefault();
+  $("rsend").disabled=true;
+  const {error}=await sb.auth.updateUser({password:$("newpw").value});
+  $("rsend").disabled=false;
+  if(error){$("rmsg").textContent=friendly(error);return}
+  $("newpw").value="";$("rdlg").close();toast("Password updated");
 };
 
 (async()=>{
@@ -237,6 +280,7 @@ $("aform").onsubmit=async e=>{
   if(sb){
     sb.auth.onAuthStateChange((ev,session)=>{
       user=session?session.user:null;renderAuth();
+      if(ev==="PASSWORD_RECOVERY"){$("rmsg").textContent="";$("rdlg").showModal()}
       if(ev==="SIGNED_OUT"){S=FRESH();saveLocal();renderHud()}
       else if(user){setTimeout(syncFromCloud,0)}
     });
