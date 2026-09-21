@@ -6,61 +6,22 @@
 //         node scripts/build.mjs --local   (reads recipes.js instead; for previewing without a network)
 import fs from "node:fs";
 import path from "node:path";
-import vm from "node:vm";
+import { ROOT, LOCAL, slugify, loadRecipes, loadRatings, makeSlugs } from "./lib.mjs";
 
-const ROOT = process.cwd();
 const OUT = path.join(ROOT, "_site");
 const SITE = (process.env.SITE_URL || "https://faceofffood.com").replace(/\/$/, "");
-const LOCAL = process.argv.includes("--local");
+const IMG_DIR = path.join(ROOT, "img");
+const CREDITS = fs.existsSync(path.join(IMG_DIR, "credits.json")) ? JSON.parse(fs.readFileSync(path.join(IMG_DIR, "credits.json"), "utf8")) : {};
+const hasImg = slug => fs.existsSync(path.join(IMG_DIR, `${slug}.jpg`));
 const TODAY = new Date().toISOString().slice(0, 10);
 
 const esc = s => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
-const slugify = s => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
 const jsonLd = o => JSON.stringify(o).replace(/</g, "\\u003c");
-
-function readLocal() {
-  const ctx = { window: {} };
-  vm.runInNewContext(fs.readFileSync(path.join(ROOT, "recipes.js"), "utf8"), ctx);
-  return ctx.window.RECIPES.map(r => ({
-    id: r.id, name: r.n, cuisine: r.c, protein: r.p, minutes: r.t, effort: r.e, vibes: r.v,
-    vegetarian: !!r.veg, why: r.w, ingredients: r.i, steps: r.s
-  }));
-}
-
-async function readSupabase() {
-  const cfg = fs.readFileSync(path.join(ROOT, "config.js"), "utf8");
-  const url = (cfg.match(/SUPABASE_URL:\s*"([^"]+)"/) || [])[1];
-  const key = (cfg.match(/SUPABASE_ANON_KEY:\s*"([^"]+)"/) || [])[1];
-  if (!url || !key || /YOUR-/.test(url)) throw new Error("config.js does not contain Supabase settings");
-  const rows = [];
-  for (let from = 0; ; from += 1000) {
-    const res = await fetch(`${url}/rest/v1/recipes?select=*&order=id.asc`, {
-      headers: { apikey: key, Range: `${from}-${from + 999}` }
-    });
-    if (!res.ok) throw new Error(`Supabase returned ${res.status}: ${await res.text()}`);
-    const page = await res.json();
-    rows.push(...page);
-    if (page.length < 1000) break;
-  }
-  if (!rows.length) throw new Error("Supabase returned 0 recipes");
-  return rows;
-}
-
-async function loadRecipes() {
-  if (LOCAL) return readLocal();
-  try {
-    return await readSupabase();
-  } catch (e) {
-    // Keep the site deployable: fall back to the recipes bundled in recipes.js and flag it in the run log.
-    console.log(`::warning::Could not read recipes from Supabase (${e.message}). Using recipes.js instead, so recipes added only in Supabase will be missing until this is fixed.`);
-    return readLocal();
-  }
-}
 
 const FONTS = "https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,700;8..60,900&family=Source+Sans+3:wght@400;600;700&display=swap";
 const PROT = { chicken: "Chicken", veg: "Vegetables", seafood: "Seafood", egg: "Egg", tofu: "Tofu", beef: "Beef / Pork" };
 
-function shell({ title, desc, canonical, body, ld }) {
+function shell({ title, desc, canonical, body, ld, image, scripts }) {
   return `<!doctype html>
 <html lang="en">
 <head>
@@ -76,7 +37,7 @@ function shell({ title, desc, canonical, body, ld }) {
 <meta property="og:title" content="${esc(title)}">
 <meta property="og:description" content="${esc(desc)}">
 <meta property="og:url" content="${canonical}">
-<meta property="og:image" content="${SITE}/og-image.png">
+<meta property="og:image" content="${image || `${SITE}/og-image.png`}">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="${FONTS}">
@@ -90,6 +51,7 @@ ${ld ? `<script type="application/ld+json">${jsonLd(ld)}</script>` : ""}
     <nav class="topnav"><a href="/">Play the games</a><a href="/recipes/">All recipes</a></nav>
   </header>
 ${body}
+  ${scripts || ""}
   <footer class="foot"><a href="/">FaceOffFood</a> · <a href="/recipes/">Browse all recipes</a></footer>
 </div>
 </body>
@@ -98,7 +60,8 @@ ${body}
 }
 
 function recipeCard(r, slugs) {
-  return `<a class="rc" href="/recipes/${slugs[r.id]}/"><span class="cu">${esc(r.cuisine)}</span><h3>${esc(r.name)}</h3><span class="m"><span>${r.minutes} min</span><span>${esc(PROT[r.protein] || r.protein)}</span></span></a>`;
+  const th = hasImg(slugs[r.id]) ? `<img class="th" loading="lazy" width="480" height="360" alt="" src="/img/${slugs[r.id]}-thumb.jpg">` : "";
+  return `<a class="rc" href="/recipes/${slugs[r.id]}/">${th}<span class="cu">${esc(r.cuisine)}</span><h3>${esc(r.name)}</h3><span class="m"><span>${r.minutes} min</span><span>${esc(PROT[r.protein] || r.protein)}</span></span></a>`;
 }
 
 function recipePage(r, slugs, all) {
@@ -118,10 +81,17 @@ function recipePage(r, slugs, all) {
     datePublished: r.created_at ? String(r.created_at).slice(0, 10) : undefined,
     mainEntityOfPage: url
   };
+  const rt = RATINGS[r.id];
+  if (rt && rt.count >= 3) ld.aggregateRating = { "@type": "AggregateRating", ratingValue: rt.avg, ratingCount: rt.count, bestRating: 5, worstRating: 1 };
+  const slug = slugs[r.id], photo = hasImg(slug), cr = CREDITS[slug];
+  if (photo) ld.image = ["", "-4x3", "-1x1"].map(x => `${SITE}/img/${slug}${x}.jpg`);
+  const fig = photo ? `<figure class="hero"><img src="/img/${slug}.jpg" width="1200" height="675" alt="${esc(r.name)}">${cr ? `<figcaption>Photo by <a href="${esc(cr.photographer_url)}" rel="noopener nofollow">${esc(cr.photographer)}</a> on <a href="${esc(cr.url)}" rel="noopener nofollow">Pexels</a></figcaption>` : ""}</figure>` : "";
   const body = `<main class="rpage">
     <p class="crumbs"><a href="/">Home</a> / <a href="/recipes/">Recipes</a> / ${esc(r.name)}</p>
     <span class="kick">${esc(r.cuisine)}</span>
     <h1>${esc(r.name)}</h1>
+    ${fig}
+    <div class="rate" id="rate" data-id="${r.id}"></div>
     <div class="dmeta"><span>${r.minutes} min</span><span>${esc(PROT[r.protein] || r.protein)}</span><span>${r.vegetarian ? "Vegetarian" : "Contains meat or fish"}</span><span>Effort ${r.effort} of 3</span></div>
     ${why ? `<h2 class="rh">Why this recipe works</h2><p class="why">${esc(why)}</p>` : ""}
     <h2 class="rh">Ingredients</h2>
@@ -131,7 +101,8 @@ function recipePage(r, slugs, all) {
     <section class="cta"><h2>Still deciding what to cook?</h2><p>Spin the wheel, play a face-off, take the mood quiz or search by what is in your fridge.</p><a class="btn" href="/">Play FaceOffFood</a></section>
     ${related.length ? `<h2 class="rh">More ${esc(r.cuisine)} recipes</h2><div class="grid">${related.map(x => recipeCard(x, slugs)).join("")}</div>` : ""}
   </main>`;
-  return shell({ title: `${r.name} Recipe (${r.minutes} Minutes) | FaceOffFood`, desc, canonical: url, body, ld });
+  return shell({ title: `${r.name} Recipe (${r.minutes} Minutes) | FaceOffFood`, desc, canonical: url, body, ld, image: photo ? `${SITE}/img/${slug}.jpg` : undefined,
+    scripts: `<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script><script src="/config.js"></script><script src="/rate.js"></script>` });
 }
 
 function indexPage(all, slugs) {
@@ -151,16 +122,12 @@ function indexPage(all, slugs) {
 }
 
 const all = await loadRecipes();
-const slugs = {}, used = new Set();
-for (const r of all) {
-  let s = slugify(r.name) || `recipe-${r.id}`;
-  if (used.has(s)) s = `${s}-${r.id}`;
-  used.add(s); slugs[r.id] = s;
-}
+const RATINGS = await loadRatings();
+const slugs = makeSlugs(all);
 
 fs.rmSync(OUT, { recursive: true, force: true });
 fs.mkdirSync(path.join(OUT, "recipes"), { recursive: true });
-for (const f of ["index.html", "app.js", "config.js", "recipes.js", "styles.css", "favicon.svg", "og-image.png", "robots.txt", "CNAME"]) {
+for (const f of ["index.html", "app.js", "config.js", "recipes.js", "styles.css", "favicon.svg", "rate.js", "og-image.png", "robots.txt", "CNAME"]) {
   if (fs.existsSync(path.join(ROOT, f))) fs.copyFileSync(path.join(ROOT, f), path.join(OUT, f));
 }
 for (const r of all) {
@@ -168,6 +135,7 @@ for (const r of all) {
   fs.mkdirSync(dir, { recursive: true });
   fs.writeFileSync(path.join(dir, "index.html"), recipePage(r, slugs, all));
 }
+if (fs.existsSync(IMG_DIR)) fs.cpSync(IMG_DIR, path.join(OUT, "img"), { recursive: true });
 fs.writeFileSync(path.join(OUT, "recipes", "index.html"), indexPage(all, slugs));
 fs.writeFileSync(path.join(OUT, "recipes", "manifest.json"), JSON.stringify(slugs));
 

@@ -47,6 +47,20 @@ After that the site rebuilds on every push, daily at about 08:17 UTC, and on dem
 
 Optional instant updates: in Supabase, **Integrations > Database Webhooks**, add a webhook on `recipes` (insert, update, delete) that POSTs to `https://api.github.com/repos/OWNER/REPO/dispatches` with headers `Authorization: Bearer <fine-grained token>`, `Accept: application/vnd.github+json` and body `{"event_type":"recipes-updated"}`. The token needs Contents: read and write on this repo only.
 
+## Recipe photos (automatic)
+
+Each run of the workflow picks a photo from [Pexels](https://www.pexels.com/api/) for every recipe that has none, saves it in `img/` (committed to the repo, so the choice stays stable), and uses it on the recipe page, in the Google recipe markup, in social previews and as a library thumbnail. Credits are in `img/credits.json` and shown under the photo.
+
+Setup: get a free key at pexels.com/api, then in the repo **Settings > Secrets and variables > Actions > New repository secret**, name `PEXELS_API_KEY`. Without it the step is skipped.
+
+Matching is by search text, so some photos will be loose matches (`"match": "loose"` in credits.json; the run log flags them). To replace one, upload your own files as `img/<slug>.jpg` (1200x675), `-4x3.jpg` (900x675), `-1x1.jpg` (800x800) and `-thumb.jpg` (480x360) over the old ones, and delete its entry in credits.json so the Pexels credit disappears. To make it pick again, delete its four files and its credits entry.
+
+## Ratings
+
+Signed-in players can rate any recipe 1 to 5 stars, in the recipe popup and on each recipe page (`rate.js`). First rating of a recipe earns +5 XP, and rating 3 recipes unlocks the Critic badge. Averages show on library cards.
+
+Setup: run `supabase/migrations/20260921000000_ratings.sql` once in the Supabase SQL Editor. It creates the `ratings` table (each user can only read and change their own rows) and a public `recipe_ratings` view with only the averages and counts. Recipe pages add Google star-rating markup once a recipe has 3 or more ratings, refreshed on each site rebuild.
+
 ## Deploy
 
 Any static host works. For GitHub Pages, upload everything (including the hidden `.github` folder and `recipes/`) and use **Deploy from a branch** until you choose the automation above.

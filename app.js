@@ -11,9 +11,11 @@ const BADGES=[
  ["Fridge Raider","Search by your ingredients",s=>s.plays.fridge>0],
  ["First Cook","Cook any recipe",s=>Object.keys(s.cooked).length>0],
  ["Globe Trotter","Cook 3 cuisines",s=>new Set(Object.keys(s.cooked).map(i=>RB[i]&&RB[i].c).filter(Boolean)).size>=3],
- ["Kitchen Regular","Cook 5 recipes",s=>Object.keys(s.cooked).length>=5]
+ ["Kitchen Regular","Cook 5 recipes",s=>Object.keys(s.cooked).length>=5],
+ ["Critic","Rate 3 recipes",()=>Object.keys(MY).length>=3]
 ];
 let PAGES={};
+let RATINGS={},MY={};
 let S={xp:0,cooked:{},plays:{wheel:0,duel:0,quiz:0,dice:0,fridge:0},badges:{}};
 try{const x=JSON.parse(localStorage.getItem("cq1")||"null");if(x)S={...S,...x,plays:{...S.plays,...x.plays}}}catch(e){}
 const saveLocal=()=>{try{localStorage.setItem("cq1",JSON.stringify(S))}catch(e){}};
@@ -49,14 +51,40 @@ function openRecipe(r){
   $("dbody").innerHTML=`<div class="dhead"><span class="kick">${r.c}</span><button class="btn ghost" id="dx">Close</button></div>
   <h2>${r.n}</h2>
   <div class="dmeta"><span>${r.t} min</span><span>${PROT[r.p]}</span><span>${r.veg?"Vegetarian":"Contains meat or fish"}</span><span>Effort ${r.e} of 3</span></div>
+  <div class="rate" id="rate"></div>
   <h3>Why this recipe works</h3><p class="why">${r.w}</p>
   <h3>Ingredients</h3><ul class="ing">${r.i.map((x,k)=>`<li><label><input type="checkbox" id="ing${k}"><span>${x}</span></label></li>`).join("")}</ul>
   <h3>Method</h3><ol class="steps">${r.s.map(x=>`<li><span>${x}</span></li>`).join("")}</ol>
   ${PAGES[r.id]?`<a class="link" href="recipes/${PAGES[r.id]}/">Open the full recipe page</a>`:""}
   <button class="btn" id="dcook" ${done?"disabled":""}>${done?"Cooked. Nice work":"I cooked this (+50 XP)"}</button>`;
+  paintRate(r);
   $("dx").onclick=()=>$("dlg").close();
   $("dcook").onclick=()=>{S.cooked[r.id]=1;$("dlg").close();award(50,"for cooking "+r.n)};
   $("dlg").showModal();
+}
+function paintRate(r,note){
+  const el=$("rate");if(!el||!sb)return;
+  const t=RATINGS[r.id],mine=MY[r.id]||0;
+  el.innerHTML=`<span class="rlead">${mine?"Your rating":"Rate this recipe"}</span><div class="stars" role="group" aria-label="Rate this recipe">${[1,2,3,4,5].map(n=>`<button type="button" data-n="${n}" class="${n<=mine?"on":""}" aria-label="${n} star${n>1?"s":""}">\u2605</button>`).join("")}</div><span class="rtxt">${t?t.avg.toFixed(1)+" average from "+t.count+(t.count===1?" rating":" ratings"):"No ratings yet"}</span>${note?`<span class="rnote">${note}</span>`:""}`;
+  el.querySelector(".stars").onclick=e=>{const b=e.target.closest("button");if(b)rateRecipe(r,+b.dataset.n)};
+}
+async function rateRecipe(r,n){
+  if(!user){$("dlg").close();setMode("in");$("adlg").showModal();$("amsg").textContent="Sign in to rate recipes.";return}
+  const first=!MY[r.id];
+  const {error}=await sb.from("ratings").upsert({recipe_id:r.id,user_id:user.id,stars:n},{onConflict:"recipe_id,user_id"});
+  if(error){paintRate(r,"Could not save your rating.");return}
+  MY[r.id]=n;
+  await loadRatings();renderGrid();
+  paintRate(r,"Thanks for rating!");
+  if(first)award(5,"for rating "+r.n);else save();
+}
+async function loadRatings(){
+  if(!sb)return;
+  try{const {data}=await sb.from("recipe_ratings").select("*");if(data){RATINGS={};data.forEach(x=>RATINGS[x.recipe_id]=x)}}catch(e){}
+}
+async function loadMine(){
+  if(!sb||!user)return;
+  try{const {data}=await sb.from("ratings").select("recipe_id,stars");if(data){MY={};data.forEach(x=>MY[x.recipe_id]=x.stars)}}catch(e){}
 }
 $("dlg").addEventListener("click",e=>{if(e.target===$("dlg"))$("dlg").close()});
 
@@ -261,7 +289,8 @@ function renderGrid(){
   const list=R.filter(r=>(!fc||r.c===fc)&&(!q||(r.n+" "+r.i.join(" ")+" "+r.c).toLowerCase().includes(q)));
   $("grid").innerHTML=list.length?list.map(r=>{
     const tag=PAGES[r.id]?`a href="recipes/${PAGES[r.id]}/"`:`button data-id="${r.id}"`,end=PAGES[r.id]?"a":"button";
-    return `<${tag} class="rc"><span class="cu">${r.c}</span><h3>${r.n}</h3><span class="m"><span>${r.t} min</span><span>${PROT[r.p]}</span>${S.cooked[r.id]?'<span class="done">Cooked</span>':""}</span></${end}>`;
+    const th=PAGES[r.id]?`<img class="th" loading="lazy" width="480" height="360" alt="" src="img/${PAGES[r.id]}-thumb.jpg" onerror="this.remove()">`:"";
+    return `<${tag} class="rc">${th}<span class="cu">${r.c}</span><h3>${r.n}</h3><span class="m"><span>${r.t} min</span><span>${PROT[r.p]}</span>${RATINGS[r.id]?`<span class="rt">\u2605 ${RATINGS[r.id].avg.toFixed(1)} (${RATINGS[r.id].count})</span>`:""}${S.cooked[r.id]?'<span class="done">Cooked</span>':""}</span></${end}>`;
   }).join(""):`<p class="hint">No dishes match. Try a different word.</p>`;
 }
 $("chips").onclick=e=>{const b=e.target.closest(".chip");if(!b)return;fc=fc===b.dataset.c?null:b.dataset.c;renderGrid()};
@@ -370,14 +399,15 @@ $("rform").onsubmit=async e=>{
 
 (async()=>{
   await loadRecipes();
+  loadRatings().then(()=>renderGrid());
   try{const m=await fetch("recipes/manifest.json");if(m.ok)PAGES=await m.json()}catch(e){}
   renderHud();gWheel();renderAuth();
   if(sb){
     sb.auth.onAuthStateChange((ev,session)=>{
       user=session?session.user:null;renderAuth();
       if(ev==="PASSWORD_RECOVERY"){$("rmsg").textContent="";$("rdlg").showModal()}
-      if(ev==="SIGNED_OUT"){S=FRESH();saveLocal();renderHud()}
-      else if(user){setTimeout(syncFromCloud,0)}
+      if(ev==="SIGNED_OUT"){S=FRESH();MY={};saveLocal();renderHud()}
+      else if(user){setTimeout(async()=>{await loadMine();syncFromCloud()},0)}
     });
   }
 })();
