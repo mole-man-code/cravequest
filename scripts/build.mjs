@@ -18,15 +18,16 @@ const esc = s => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(
 const slugify = s => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
 const jsonLd = o => JSON.stringify(o).replace(/</g, "\\u003c");
 
-async function loadRecipes() {
-  if (LOCAL) {
-    const ctx = { window: {} };
-    vm.runInNewContext(fs.readFileSync(path.join(ROOT, "recipes.js"), "utf8"), ctx);
-    return ctx.window.RECIPES.map(r => ({
-      id: r.id, name: r.n, cuisine: r.c, protein: r.p, minutes: r.t, effort: r.e, vibes: r.v,
-      vegetarian: !!r.veg, why: r.w, ingredients: r.i, steps: r.s
-    }));
-  }
+function readLocal() {
+  const ctx = { window: {} };
+  vm.runInNewContext(fs.readFileSync(path.join(ROOT, "recipes.js"), "utf8"), ctx);
+  return ctx.window.RECIPES.map(r => ({
+    id: r.id, name: r.n, cuisine: r.c, protein: r.p, minutes: r.t, effort: r.e, vibes: r.v,
+    vegetarian: !!r.veg, why: r.w, ingredients: r.i, steps: r.s
+  }));
+}
+
+async function readSupabase() {
   const cfg = fs.readFileSync(path.join(ROOT, "config.js"), "utf8");
   const url = (cfg.match(/SUPABASE_URL:\s*"([^"]+)"/) || [])[1];
   const key = (cfg.match(/SUPABASE_ANON_KEY:\s*"([^"]+)"/) || [])[1];
@@ -41,8 +42,19 @@ async function loadRecipes() {
     rows.push(...page);
     if (page.length < 1000) break;
   }
-  if (!rows.length) throw new Error("Supabase returned 0 recipes; refusing to publish an empty site");
+  if (!rows.length) throw new Error("Supabase returned 0 recipes");
   return rows;
+}
+
+async function loadRecipes() {
+  if (LOCAL) return readLocal();
+  try {
+    return await readSupabase();
+  } catch (e) {
+    // Keep the site deployable: fall back to the recipes bundled in recipes.js and flag it in the run log.
+    console.log(`::warning::Could not read recipes from Supabase (${e.message}). Using recipes.js instead, so recipes added only in Supabase will be missing until this is fixed.`);
+    return readLocal();
+  }
 }
 
 const FONTS = "https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,700;8..60,900&family=Source+Sans+3:wght@400;600;700&display=swap";

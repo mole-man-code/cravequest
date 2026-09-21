@@ -259,10 +259,13 @@ function renderGrid(){
   const q=$("q").value.trim().toLowerCase();
   $("chips").innerHTML=CU.map(c=>`<button class="chip" aria-pressed="${fc===c}" data-c="${c}">${c}</button>`).join("");
   const list=R.filter(r=>(!fc||r.c===fc)&&(!q||(r.n+" "+r.i.join(" ")+" "+r.c).toLowerCase().includes(q)));
-  $("grid").innerHTML=list.length?list.map(r=>`<button class="rc" data-id="${r.id}"><span class="cu">${r.c}</span><h3>${r.n}</h3><span class="m"><span>${r.t} min</span><span>${PROT[r.p]}</span>${S.cooked[r.id]?'<span class="done">Cooked</span>':""}</span></button>`).join(""):`<p class="hint">No dishes match. Try a different word.</p>`;
+  $("grid").innerHTML=list.length?list.map(r=>{
+    const tag=PAGES[r.id]?`a href="recipes/${PAGES[r.id]}/"`:`button data-id="${r.id}"`,end=PAGES[r.id]?"a":"button";
+    return `<${tag} class="rc"><span class="cu">${r.c}</span><h3>${r.n}</h3><span class="m"><span>${r.t} min</span><span>${PROT[r.p]}</span>${S.cooked[r.id]?'<span class="done">Cooked</span>':""}</span></${end}>`;
+  }).join(""):`<p class="hint">No dishes match. Try a different word.</p>`;
 }
 $("chips").onclick=e=>{const b=e.target.closest(".chip");if(!b)return;fc=fc===b.dataset.c?null:b.dataset.c;renderGrid()};
-$("grid").onclick=e=>{const b=e.target.closest(".rc");if(b)openRecipe(RB[b.dataset.id])};
+$("grid").onclick=e=>{const b=e.target.closest("button.rc");if(b)openRecipe(RB[b.dataset.id])};
 $("q").oninput=renderGrid;
 
 /* ---------- Supabase (optional) ----------
