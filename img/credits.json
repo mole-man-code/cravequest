@@ -1,0 +1,625 @@
+{
+ "cacio-e-pepe": {
+  "photographer": "adrian vieriu",
+  "photographer_url": "https://www.pexels.com/@printexstar",
+  "url": "https://www.pexels.com/photo/spaghetti-aglio-e-olio-with-chopped-basil-on-white-plate-11654236/",
+  "alt": "Close-up of a plate of classic Italian spaghetti aglio e olio garnished with fresh herbs.",
+  "match": "loose"
+ },
+ "chicken-piccata": {
+  "photographer": "Huzaifa Bukhari",
+  "photographer_url": "https://www.pexels.com/@huzaifabukhari",
+  "url": "https://www.pexels.com/photo/plate-with-a-delicious-meal-16845749/",
+  "alt": "Delicious roasted chicken with sauce, vegetables, and potatoes served on a plate. Perfect for a gourmet meal.",
+  "match": "good"
+ },
+ "chicken-tinga-tacos": {
+  "photographer": "Paul Friesen",
+  "photographer_url": "https://www.pexels.com/@paulfriesen",
+  "url": "https://www.pexels.com/photo/close-up-shot-of-delicious-tacos-12512836/",
+  "alt": "Close-up of colorful chicken tacos topped with fresh vegetables and cheese, perfect for Mexican cuisine lovers.",
+  "match": "good"
+ },
+ "black-bean-quesadillas": {
+  "photographer": "Polina Tankilevitch",
+  "photographer_url": "https://www.pexels.com/@polina-tankilevitch",
+  "url": "https://www.pexels.com/photo/close-up-photo-of-delicious-quesadilla-on-a-plate-5848702/",
+  "alt": "Delicious grilled quesadilla with corn, black beans, and guacamole on a gray plate.",
+  "match": "good"
+ },
+ "green-curry-with-shrimp": {
+  "photographer": "Asit Naskar",
+  "photographer_url": "https://www.pexels.com/@asit202",
+  "url": "https://www.pexels.com/photo/shrimps-in-sause-with-green-chili-peppers-and-parsley-in-round-dish-with-chopsticks-9809033/",
+  "alt": "A mouth-watering Indian shrimp curry garnished with coriander and green chilies, captured in a vibrant top view.",
+  "match": "good"
+ },
+ "pad-see-ew": {
+  "photographer": "UNDO KIM",
+  "photographer_url": "https://www.pexels.com/@undo-kim-2153633398",
+  "url": "https://www.pexels.com/photo/delicious-thai-pad-see-ew-noodles-on-rustic-table-35063430/",
+  "alt": "Savor the authentic taste of Thai Pad See Ew with chicken and vegetables, beautifully presented on a rustic wooden table.",
+  "match": "good"
+ },
+ "chana-masala": {
+  "photographer": "Muhammad  Khawar Nazir",
+  "photographer_url": "https://www.pexels.com/@drmkhawarnazir",
+  "url": "https://www.pexels.com/photo/close-up-of-chana-masala-9287035/",
+  "alt": "A close-up of traditional Indian chana masala garnished with fresh herbs, showcasing its rich and appetizing flavors.",
+  "match": "good"
+ },
+ "butter-chicken": {
+  "photographer": "Xian Saiful",
+  "photographer_url": "https://www.pexels.com/@xiansaiful",
+  "url": "https://www.pexels.com/photo/delicious-butter-chicken-curry-in-brass-bowl-35158690/",
+  "alt": "Authentic Indian butter chicken served in a brass bowl with creamy sauce, on a wooden table.",
+  "match": "good"
+ },
+ "miso-salmon-rice-bowl": {
+  "photographer": "minchephoto photography",
+  "photographer_url": "https://www.pexels.com/@minchephoto",
+  "url": "https://www.pexels.com/photo/close-up-of-a-meal-6880541/",
+  "alt": "A beautifully arranged Japanese meal featuring rice bowl, miso soup, and side dishes on a wooden tray.",
+  "match": "good"
+ },
+ "chicken-katsu-curry": {
+  "photographer": "Amar  Preciado",
+  "photographer_url": "https://www.pexels.com/@amar",
+  "url": "https://www.pexels.com/photo/close-up-of-a-chicken-curry-katsu-dish-17593646/",
+  "alt": "Mouthwatering chicken katsu served with rich curry sauce and white rice.",
+  "match": "good"
+ },
+ "smash-burgers": {
+  "photographer": "Luca Vaccaro",
+  "photographer_url": "https://www.pexels.com/@luca-vaccaro-2067004603",
+  "url": "https://www.pexels.com/photo/street-food-vendor-preparing-burgers-at-food-truck-31131430/",
+  "alt": "Street food vendor serves tasty burgers at a vibrant food market stall. Capturing the essence of urban cuisine.",
+  "match": "good"
+ },
+ "sheet-pan-sausage-and-veg": {
+  "photographer": "Aurelijus U.",
+  "photographer_url": "https://www.pexels.com/@aurelijus-u-2148621102",
+  "url": "https://www.pexels.com/photo/appetizing-grilled-sausages-in-a-frying-pan-31820138/",
+  "alt": "Close-up of spiral sausages frying in a pan, showcasing a delicious, rustic meal preparation.",
+  "match": "loose"
+ },
+ "lemony-chickpea-salad": {
+  "photographer": "eat kubba",
+  "photographer_url": "https://www.pexels.com/@eat-kubba-15863701",
+  "url": "https://www.pexels.com/photo/food-in-a-bowl-6750382/",
+  "alt": "A top view of a nutritious chickpea salad with fresh tomatoes and cucumbers on a wooden board.",
+  "match": "good"
+ },
+ "shakshuka": {
+  "photographer": "Valeria Boltneva",
+  "photographer_url": "https://www.pexels.com/@valeriya",
+  "url": "https://www.pexels.com/photo/delicious-shakshuka-skillet-with-cheese-and-herbs-35672957/",
+  "alt": "Appetizing shakshuka in a skillet, topped with cheese and fresh herbs, perfect for a hearty breakfast.",
+  "match": "good"
+ },
+ "egg-fried-rice": {
+  "photographer": "Thượng Hy",
+  "photographer_url": "https://www.pexels.com/@th-ng-hy-390169813",
+  "url": "https://www.pexels.com/photo/fried-rice-with-eggs-in-bowls-15060360/",
+  "alt": "Close-up of hands holding bowls of fried rice topped with fried eggs, perfect for meal inspiration.",
+  "match": "good"
+ },
+ "mapo-tofu": {
+  "photographer": "Change C.C",
+  "photographer_url": "https://www.pexels.com/@change-c-c-974768353",
+  "url": "https://www.pexels.com/photo/close-up-of-a-person-eating-a-meal-20943933/",
+  "alt": "Close-up of a flavorful tofu dish with sauce in a traditional pot, perfect for a culinary experience.",
+  "match": "good"
+ },
+ "spaghetti-aglio-e-olio": {
+  "photographer": "adrian vieriu",
+  "photographer_url": "https://www.pexels.com/@printexstar",
+  "url": "https://www.pexels.com/photo/spaghetti-aglio-e-olio-with-chopped-basil-on-white-plate-11654236/",
+  "alt": "Close-up of a plate of classic Italian spaghetti aglio e olio garnished with fresh herbs.",
+  "match": "good"
+ },
+ "sausage-ragu-rigatoni": {
+  "photographer": "MART  PRODUCTION",
+  "photographer_url": "https://www.pexels.com/@mart-production",
+  "url": "https://www.pexels.com/photo/pasta-and-sauces-served-for-dinner-8108206/",
+  "alt": "Flat lay of uncooked rigatoni with tomato sauce and seasonings on a kitchen counter.",
+  "match": "loose"
+ },
+ "huevos-rancheros": {
+  "photographer": "Allan González",
+  "photographer_url": "https://www.pexels.com/@allanglezg",
+  "url": "https://www.pexels.com/photo/huevos-rancheros-with-avocado-in-salamanca-restaurant-31823015/",
+  "alt": "Delicious Huevos Rancheros on a plate with avocado slices in a Mexican restaurant setting.",
+  "match": "good"
+ },
+ "carne-asada-tacos": {
+  "photographer": "RDNE Stock project",
+  "photographer_url": "https://www.pexels.com/@rdne",
+  "url": "https://www.pexels.com/photo/cooked-meat-on-the-pan-5737377/",
+  "alt": "Delicious carne asada cooked in a pan, showcasing appetizing Mexican flavors.",
+  "match": "good"
+ },
+ "thai-basil-chicken": {
+  "photographer": "Manit Seekhao",
+  "photographer_url": "https://www.pexels.com/@manit-seekhao-271238882",
+  "url": "https://www.pexels.com/photo/close-up-shot-of-cooked-food-on-the-plate-12824410/",
+  "alt": "Tasty Thai basil chicken with rice, fried egg, red chili, and cucumber slices on a plate.",
+  "match": "good"
+ },
+ "coconut-mushroom-tom-kha": {
+  "photographer": "UNDO KIM",
+  "photographer_url": "https://www.pexels.com/@undo-kim-2153633398",
+  "url": "https://www.pexels.com/photo/delicious-tom-kha-gai-thai-coconut-soup-35049889/",
+  "alt": "Authentic Thai Tom Kha Gai soup with chicken, coconut milk, and vegetables.",
+  "match": "good"
+ },
+ "palak-paneer": {
+  "photographer": "Kiran More",
+  "photographer_url": "https://www.pexels.com/@kiran-more-1081549420",
+  "url": "https://www.pexels.com/photo/delicious-indian-palak-paneer-dish-top-view-31249589/",
+  "alt": "Top view of traditional Indian Palak Paneer garnished with cream and vegetables.",
+  "match": "good"
+ },
+ "coconut-red-lentil-dal": {
+  "photographer": "Antigoni Pavlaki",
+  "photographer_url": "https://www.pexels.com/@antigoni-pavlaki-349384361",
+  "url": "https://www.pexels.com/photo/onions-and-pot-of-beans-15655219/",
+  "alt": "A top view of spilled red lentils with onions, garlic, and spices on a textured dark surface.",
+  "match": "good"
+ },
+ "oyakodon": {
+  "photographer": "Gu Ko",
+  "photographer_url": "https://www.pexels.com/@gu-ko-2150570603",
+  "url": "https://www.pexels.com/photo/delicious-japanese-oyakodon-bowl-with-chicken-37297724/",
+  "alt": "Savor the taste of Japanese oyakodon with tender chicken and eggs served in a decorative bowl.",
+  "match": "good"
+ },
+ "vegetable-yaki-udon": {
+  "photographer": "Nadin Sh",
+  "photographer_url": "https://www.pexels.com/@nadin-sh-78971847",
+  "url": "https://www.pexels.com/photo/pasta-on-plate-16594961/",
+  "alt": "Plate of udon noodles topped with rich black truffles, perfect for a gourmet meal.",
+  "match": "loose"
+ },
+ "stovetop-mac-and-cheese": {
+  "photographer": "Barbara G",
+  "photographer_url": "https://www.pexels.com/@barbara-g-135944487",
+  "url": "https://www.pexels.com/photo/tasty-man-n-cheese-in-plate-on-black-background-10993148/",
+  "alt": "Delicious creamy mac and cheese topped with shredded cheese on a black plate.",
+  "match": "good"
+ },
+ "weeknight-beef-chili": {
+  "photographer": "Piotr Arnoldes",
+  "photographer_url": "https://www.pexels.com/@piotr-arnoldes-7862031",
+  "url": "https://www.pexels.com/photo/cooked-food-in-the-bowl-7111387/",
+  "alt": "Delicious homemade beef chili served with fresh bread on a rustic table for a cozy meal.",
+  "match": "good"
+ },
+ "lemon-herb-sheet-pan-salmon": {
+  "photographer": "ธันยกร ไกรสร",
+  "photographer_url": "https://www.pexels.com/@tanyakorn",
+  "url": "https://www.pexels.com/photo/mouthwatering-food-on-ceramic-plate-12017478/",
+  "alt": "A delicious plated salmon with roasted vegetables, garnished with lemon and herbs on a rustic table.",
+  "match": "good"
+ },
+ "chicken-shawarma-bowls": {
+  "photographer": "Dee Dave",
+  "photographer_url": "https://www.pexels.com/@dee-dave-60341237",
+  "url": "https://www.pexels.com/photo/indian-meal-with-rice-and-curry-8018000/",
+  "alt": "A vibrant chicken shawarma platter with rice, vegetables, and a slice of lemon, presented on a colorful mosaic table.",
+  "match": "good"
+ },
+ "kung-pao-chicken": {
+  "photographer": "Anil  Sharma",
+  "photographer_url": "https://www.pexels.com/@shootsaga",
+  "url": "https://www.pexels.com/photo/delicious-kung-pao-chicken-on-white-plate-30708204/",
+  "alt": "Tasty Kung Pao chicken dish served on a white plate with garnish, showcasing vibrant colors and textures.",
+  "match": "good"
+ },
+ "tomato-and-egg-stir-fry": {
+  "photographer": "Eaksit Sangdee",
+  "photographer_url": "https://www.pexels.com/@eaksit-sangdee-1672578",
+  "url": "https://www.pexels.com/photo/stir-fried-zucchini-with-eggs-in-a-white-dish-on-a-white-isolated-background-thai-food-top-view-15797949/",
+  "alt": "Freshly prepared Asian stir-fry with green vegetables and eggs, perfect for a healthy meal.",
+  "match": "good"
+ },
+ "kimchi-fried-rice": {
+  "photographer": "makafood",
+  "photographer_url": "https://www.pexels.com/@makafood-82669418",
+  "url": "https://www.pexels.com/photo/close-up-of-a-meal-8890016/",
+  "alt": "Tantalizing Korean Kimchi Fried Rice served in a ceramic bowl, showcasing vibrant colors and textures.",
+  "match": "good"
+ },
+ "bulgogi-beef-bowls": {
+  "photographer": "Nadin Sh",
+  "photographer_url": "https://www.pexels.com/@nadin-sh-78971847",
+  "url": "https://www.pexels.com/photo/bowl-of-marinated-beef-24738513/",
+  "alt": "Close-up of sliced marinated Korean bulgogi beef in a stylish black bowl.",
+  "match": "good"
+ },
+ "soft-tofu-stew": {
+  "photographer": "Cynthia Ortega Espinosa",
+  "photographer_url": "https://www.pexels.com/@shinshiakiiro",
+  "url": "https://www.pexels.com/photo/stew-with-cheese-13774721/",
+  "alt": "A vibrant, healthy vegan meal featuring tofu stew with rice and vegetables, perfect for food enthusiasts.",
+  "match": "good"
+ },
+ "gochujang-chicken-thighs": {
+  "photographer": "FOX ^.ᆽ.^= ∫",
+  "photographer_url": "https://www.pexels.com/@fox-58267",
+  "url": "https://www.pexels.com/photo/chicken-thighs-frying-in-pan-24902945/",
+  "alt": "Close-up of crispy fried chicken thighs sizzling in a hot pan, perfect for meal inspiration.",
+  "match": "good"
+ },
+ "croque-monsieur": {
+  "photographer": "Huy Phan",
+  "photographer_url": "https://www.pexels.com/@huy-phan-316220",
+  "url": "https://www.pexels.com/photo/assorted-foods-on-table-1391301/",
+  "alt": "Enjoy a delightful meal with croque monsieur, fries, and salad at a Parisian bistro.",
+  "match": "good"
+ },
+ "ratatouille": {
+  "photographer": "Edita Brus",
+  "photographer_url": "https://www.pexels.com/@edita-brus-2027796741",
+  "url": "https://www.pexels.com/photo/colorful-vegan-ratatouille-dish-close-up-36040965/",
+  "alt": "Close-up of a vibrant, fresh ratatouille with tomatoes, eggplants, and spices.",
+  "match": "good"
+ },
+ "steak-frites": {
+  "photographer": "hana 17",
+  "photographer_url": "https://www.pexels.com/@hana-17-2162647622",
+  "url": "https://www.pexels.com/photo/delicious-belgian-fries-at-frites-atelier-38392018/",
+  "alt": "Crispy Belgian fries served at Frites Atelier, an iconic street food spot in Brussels.",
+  "match": "good"
+ },
+ "mussels-in-white-wine": {
+  "photographer": "Daniel Balarezo",
+  "photographer_url": "https://www.pexels.com/@danielbalarezo",
+  "url": "https://www.pexels.com/photo/spaghetti-and-clams-meal-12263112/",
+  "alt": "A delectable seafood pasta dish featuring fresh mussels complemented by a glass of white wine.",
+  "match": "good"
+ },
+ "chicken-souvlaki": {
+  "photographer": "Anthony Rahayel",
+  "photographer_url": "https://www.pexels.com/@anthony-rahayel-125801377",
+  "url": "https://www.pexels.com/photo/delicious-greek-souvlaki-bowl-with-feta-38399749/",
+  "alt": "Savory Greek souvlaki bowl with feta, rice, and creamy dressing.",
+  "match": "good"
+ },
+ "classic-greek-salad": {
+  "photographer": "Daniela Elena Tentis",
+  "photographer_url": "https://www.pexels.com/@daniela-elena-tentis-118658",
+  "url": "https://www.pexels.com/photo/pastry-with-cream-in-ceramic-saucer-726001/",
+  "alt": "A close-up of a classic Greek Dakos salad with feta, tomato, and olive on a wooden table.",
+  "match": "good"
+ },
+ "shrimp-saganaki": {
+  "photographer": "Rudi Kessler",
+  "photographer_url": "https://www.pexels.com/@rudi-kessler-1264051470",
+  "url": "https://www.pexels.com/photo/soup-with-seafood-on-plate-23627792/",
+  "alt": "A vibrant seafood soup featuring fresh shrimps and fish in a rich broth.",
+  "match": "good"
+ },
+ "keftedes-meatball-bowls": {
+  "photographer": "Abby Chung",
+  "photographer_url": "https://www.pexels.com/@abby-chung-371167",
+  "url": "https://www.pexels.com/photo/mixed-vegetables-served-on-brown-bowl-998245/",
+  "alt": "Savory homemade meatballs with fresh cucumber and carrot slices in a rustic bowl.",
+  "match": "good"
+ },
+ "lemongrass-chicken-banh-mi": {
+  "photographer": "Phương Khánh",
+  "photographer_url": "https://www.pexels.com/@ph-ng-khanh-623875464",
+  "url": "https://www.pexels.com/photo/delicious-healthy-sandwiches-17748171/",
+  "alt": "Delicious Banh Mi sandwiches on a wooden board, wrapped in paper, featuring fresh ingredients.",
+  "match": "good"
+ },
+ "shrimp-summer-rolls": {
+  "photographer": "Quang Nguyen Vinh",
+  "photographer_url": "https://www.pexels.com/@quang-nguyen-vinh-222549",
+  "url": "https://www.pexels.com/photo/seafood-on-a-plate-12386446/",
+  "alt": "Close-up of authentic Vietnamese spring rolls filled with shrimp and vegetables on a plate.",
+  "match": "good"
+ },
+ "weeknight-beef-pho": {
+  "photographer": "RDNE Stock project",
+  "photographer_url": "https://www.pexels.com/@rdne",
+  "url": "https://www.pexels.com/photo/cooked-food-in-the-bowl-6646022/",
+  "alt": "Delicious Vietnamese Pho noodle soup with fresh herbs and beef, captured from above.",
+  "match": "good"
+ },
+ "tofu-vermicelli-bowls": {
+  "photographer": "FOX ^.ᆽ.^= ∫",
+  "photographer_url": "https://www.pexels.com/@fox-58267",
+  "url": "https://www.pexels.com/photo/crispy-spring-roll-with-rice-vermicelli-salad-33662943/",
+  "alt": "Delicious crispy spring roll served with rice vermicelli and fresh greens in a bowl.",
+  "match": "good"
+ },
+ "skillet-margherita-pizza": {
+  "photographer": "Sonali Mehta",
+  "photographer_url": "https://www.pexels.com/@sonali-mehta-1514525371",
+  "url": "https://www.pexels.com/photo/delicious-margherita-pizza-with-fresh-toppings-31596394/",
+  "alt": "Close-up of a fresh Margherita pizza with tomatoes and basil. Perfect for Italian cuisine promotions.",
+  "match": "good"
+ },
+ "minestrone": {
+  "photographer": "Farhad Ibrahimzade",
+  "photographer_url": "https://www.pexels.com/@farhad",
+  "url": "https://www.pexels.com/photo/bread-food-plate-salad-8743819/",
+  "alt": "A luxurious dining table set with gourmet food and drinks overlooking a beautiful cityscape.",
+  "match": "loose"
+ },
+ "chicken-parmesan": {
+  "photographer": "Reynaldo Yodia",
+  "photographer_url": "https://www.pexels.com/@reynaldoyodia",
+  "url": "https://www.pexels.com/photo/cooked-food-on-white-ceramic-plate-13444951/",
+  "alt": "Close-up of a beautifully plated chicken parmesan with pasta and fresh salad on a grey plate.",
+  "match": "good"
+ },
+ "chicken-enchiladas": {
+  "photographer": "Talha Kuğu",
+  "photographer_url": "https://www.pexels.com/@talha-kugu-2160759144",
+  "url": "https://www.pexels.com/photo/delicious-mexican-enchiladas-with-sauce-37006565/",
+  "alt": "Close-up of savory Mexican enchiladas topped with tomato sauce and herbs on a plate.",
+  "match": "good"
+ },
+ "crispy-fish-tacos": {
+  "photographer": "Amy Farías",
+  "photographer_url": "https://www.pexels.com/@amfaru",
+  "url": "https://www.pexels.com/photo/close-up-of-a-dinner-9044686/",
+  "alt": "Crispy Baja fish tacos with fresh pineapple salsa, onions, and cilantro in a modern food presentation.",
+  "match": "good"
+ },
+ "street-corn-salad": {
+  "photographer": "Nadin Sh",
+  "photographer_url": "https://www.pexels.com/@nadin-sh-78971847",
+  "url": "https://www.pexels.com/photo/a-bowl-of-tuna-salad-with-eggs-19051901/",
+  "alt": "A vibrant bowl of tuna salad with corn and quail eggs for a healthy meal.",
+  "match": "good"
+ },
+ "shrimp-pad-thai": {
+  "photographer": "UNDO KIM",
+  "photographer_url": "https://www.pexels.com/@undo-kim-2153633398",
+  "url": "https://www.pexels.com/photo/delicious-shrimp-pad-thai-on-white-plate-34723307/",
+  "alt": "Close-up of shrimp pad thai with lime and peanuts on a white plate, perfect for food lovers.",
+  "match": "good"
+ },
+ "chicken-larb": {
+  "photographer": "Manit Seekhao",
+  "photographer_url": "https://www.pexels.com/@manit-seekhao-271238882",
+  "url": "https://www.pexels.com/photo/close-up-shot-of-cooked-food-on-the-plate-12824410/",
+  "alt": "Tasty Thai basil chicken with rice, fried egg, red chili, and cucumber slices on a plate.",
+  "match": "good"
+ },
+ "red-curry-with-sweet-potato": {
+  "photographer": "Mary Rose",
+  "photographer_url": "https://www.pexels.com/@mary-rose-59971994",
+  "url": "https://www.pexels.com/photo/sweet-potatoes-on-red-bowl-7999009/",
+  "alt": "Top view of sweet potatoes on a red plate, perfect for healthy food concepts.",
+  "match": "good"
+ },
+ "yogurt-marinated-chicken-thighs": {
+  "photographer": "Mustafa  Erdağ",
+  "photographer_url": "https://www.pexels.com/@vitrinreklam",
+  "url": "https://www.pexels.com/photo/barbecued-chicken-thighs-and-vegetables-15387927/",
+  "alt": "Plate of grilled chicken thighs with barley, peppers, and onions on a white plate.",
+  "match": "good"
+ },
+ "aloo-gobi": {
+  "photographer": "Muhammad  Khawar Nazir",
+  "photographer_url": "https://www.pexels.com/@drmkhawarnazir",
+  "url": "https://www.pexels.com/photo/delicious-spicy-indian-aloo-kofta-curry-dish-36343375/",
+  "alt": "Close-up of a flavorful Indian aloo kofta curry garnished with fresh coriander.",
+  "match": "good"
+ },
+ "egg-curry": {
+  "photographer": "Milton Das",
+  "photographer_url": "https://www.pexels.com/@miltonphotography",
+  "url": "https://www.pexels.com/photo/delicious-indian-egg-curry-with-garnish-35267285/",
+  "alt": "Indian egg curry served with lemon slices, onions, and tomato garnish.",
+  "match": "good"
+ },
+ "weeknight-chicken-ramen": {
+  "photographer": "FOX ^.ᆽ.^= ∫",
+  "photographer_url": "https://www.pexels.com/@fox-58267",
+  "url": "https://www.pexels.com/photo/noodles-with-egg-and-meat-26510357/",
+  "alt": "A savory bowl of ramen with poached egg, chicken, and green onions, perfect for a comforting meal.",
+  "match": "good"
+ },
+ "gyudon": {
+  "photographer": "Cohesion Singapore",
+  "photographer_url": "https://www.pexels.com/@cohesion-singapore-492300417",
+  "url": "https://www.pexels.com/photo/bowl-of-food-16569555/",
+  "alt": "A flavorful beef rice bowl topped with a poached egg and green onions on a white background.",
+  "match": "loose"
+ },
+ "teriyaki-salmon": {
+  "photographer": "Vitaliy Haiduk",
+  "photographer_url": "https://www.pexels.com/@vitaliy-haiduk-326720599",
+  "url": "https://www.pexels.com/photo/a-bowl-of-rice-with-meat-and-green-onions-17308546/",
+  "alt": "Delicious teriyaki beef with rice garnished with sesame seeds and green onions.",
+  "match": "good"
+ },
+ "grilled-cheese-and-tomato-soup": {
+  "photographer": "Mel Audelo",
+  "photographer_url": "https://www.pexels.com/@melaudelo",
+  "url": "https://www.pexels.com/photo/sandwich-served-in-a-restaurant-26936280/",
+  "alt": "Warm grilled cheese sandwich with herbs and tomatoes served in a Dublin cafe.",
+  "match": "good"
+ },
+ "oven-chicken-tenders": {
+  "photographer": "Chan Walrus",
+  "photographer_url": "https://www.pexels.com/@chanwalrus",
+  "url": "https://www.pexels.com/photo/close-up-photo-of-fritters-1059943/",
+  "alt": "Delicious crispy fried chicken tenders served with a fresh green salad and dipping sauce.",
+  "match": "good"
+ },
+ "shrimp-and-grits": {
+  "photographer": "Lucio Panerai",
+  "photographer_url": "https://www.pexels.com/@panerai",
+  "url": "https://www.pexels.com/photo/close-up-photo-of-a-dish-with-shrimps-7636383/",
+  "alt": "Close-up of a delicious shrimp risotto with bokeh background, garnished with a lime slice.",
+  "match": "good"
+ },
+ "baked-falafel-bowls": {
+  "photographer": "Loren Castillo",
+  "photographer_url": "https://www.pexels.com/@lorencastillo",
+  "url": "https://www.pexels.com/photo/close-up-shot-of-delicious-food-in-white-ceramic-bowl-9213971/",
+  "alt": "Tasty Mediterranean falafel bowl with fresh greens, a lemon slice, and hummus.",
+  "match": "good"
+ },
+ "lemon-olive-chicken": {
+  "photographer": "Collab Media",
+  "photographer_url": "https://www.pexels.com/@collab-media-173741945",
+  "url": "https://www.pexels.com/photo/a-plate-with-a-piece-of-fish-and-vegetables-27626308/",
+  "alt": "Elegant gourmet chicken dish with spices, lemon slices, and vibrant garnish, perfect for culinary presentations.",
+  "match": "good"
+ },
+ "white-bean-and-tuna-salad": {
+  "photographer": "Tuğba ÖZTÜRK",
+  "photographer_url": "https://www.pexels.com/@tugba-ozturk-368300535",
+  "url": "https://www.pexels.com/photo/bowl-of-salad-19572488/",
+  "alt": "A close-up of a fresh tuna salad featuring lettuce and tomatoes in a white bowl on a dark surface.",
+  "match": "good"
+ },
+ "beef-and-broccoli": {
+  "photographer": "Ivan Georgiev",
+  "photographer_url": "https://www.pexels.com/@ivandesignx",
+  "url": "https://www.pexels.com/photo/close-up-of-beef-and-broccoli-stir-fry-dish-31867670/",
+  "alt": "Delicious beef and broccoli stir fry with vibrant colors and appetizing texture.",
+  "match": "good"
+ },
+ "egg-drop-soup": {
+  "photographer": "FOX ^.ᆽ.^= ∫",
+  "photographer_url": "https://www.pexels.com/@fox-58267",
+  "url": "https://www.pexels.com/photo/a-close-up-shot-of-a-delicious-soup-12913641/",
+  "alt": "Close-up of a delicious homemade egg drop soup in a white bowl on a wooden table.",
+  "match": "good"
+ },
+ "dry-fried-green-beans": {
+  "photographer": "Petr Ganaj",
+  "photographer_url": "https://www.pexels.com/@ganajp",
+  "url": "https://www.pexels.com/photo/close-up-photo-of-a-pile-of-green-mung-beans-18358654/",
+  "alt": "Detailed close-up image of green mung beans arranged in a pattern, perfect for food backgrounds.",
+  "match": "good"
+ },
+ "japchae": {
+  "photographer": "Luis Becerra  Fotógrafo",
+  "photographer_url": "https://www.pexels.com/@luisbecerrafotografo",
+  "url": "https://www.pexels.com/photo/top-view-of-soju-and-an-assortment-of-korean-food-5773971/",
+  "alt": "Top view of various Korean dishes including bibimbap, japchae, and soju for a traditional dining experience.",
+  "match": "good"
+ },
+ "dakgalbi": {
+  "photographer": "Rashed Paykary",
+  "photographer_url": "https://www.pexels.com/@peaky",
+  "url": "https://www.pexels.com/photo/vibrant-medley-of-chopped-vegetables-33707461/",
+  "alt": "A colorful mix of chopped tomatoes, peppers, and onions creating a vibrant culinary texture.",
+  "match": "loose"
+ },
+ "rolled-korean-omelet": {
+  "photographer": "makafood",
+  "photographer_url": "https://www.pexels.com/@makafood-82669418",
+  "url": "https://www.pexels.com/photo/rolled-omelet-on-ceramic-plate-8979761/",
+  "alt": "A close-up view of a sliced rolled omelet served on a ceramic plate, perfect for breakfast.",
+  "match": "good"
+ },
+ "french-onion-soup": {
+  "photographer": "Maria Isabelle Warren",
+  "photographer_url": "https://www.pexels.com/@maria-isabelle-warren-2505044",
+  "url": "https://www.pexels.com/photo/person-holding-stainless-steel-spoon-scooping-food-on-white-ceramic-bowl-9139120/",
+  "alt": "Top view of gourmet French onion soup with melted cheese in a ceramic bowl, served with a spoon.",
+  "match": "good"
+ },
+ "french-omelette": {
+  "photographer": "Emine Gizem",
+  "photographer_url": "https://www.pexels.com/@emine-gizem-806264421",
+  "url": "https://www.pexels.com/photo/french-omelette-with-vegetables-23996321/",
+  "alt": "Golden omelette served with green olives, cucumbers, and tomatoes on a checkered cloth.",
+  "match": "good"
+ },
+ "salade-nicoise": {
+  "photographer": "Alejandra Montenegro",
+  "photographer_url": "https://www.pexels.com/@alejandra-montenegro-1146787",
+  "url": "https://www.pexels.com/photo/salads-selection-on-table-18281696/",
+  "alt": "An enticing spread of salads and dressings on a buffet table, perfect for outdoor events.",
+  "match": "loose"
+ },
+ "greek-lemon-chicken-and-potatoes": {
+  "photographer": "Huzaifa Bukhari",
+  "photographer_url": "https://www.pexels.com/@huzaifabukhari",
+  "url": "https://www.pexels.com/photo/plate-with-a-delicious-meal-16845749/",
+  "alt": "Delicious roasted chicken with sauce, vegetables, and potatoes served on a plate. Perfect for a gourmet meal.",
+  "match": "good"
+ },
+ "fasolada": {
+  "photographer": "Mike",
+  "photographer_url": "https://www.pexels.com/@mike-468229",
+  "url": "https://www.pexels.com/photo/variety-of-spices-and-vegetables-on-black-surface-1192031/",
+  "alt": "Top view of fresh vegetables and nuts arranged on a dark surface, showcasing raw ingredients.",
+  "match": "loose"
+ },
+ "baked-feta-pasta": {
+  "photographer": "Ayrat",
+  "photographer_url": "https://www.pexels.com/@ayrat-244411276",
+  "url": "https://www.pexels.com/photo/fusilli-pasta-with-feta-and-olives-12354402/",
+  "alt": "A vibrant plate of fusilli pasta with fresh tomatoes, olives, and feta cheese.",
+  "match": "good"
+ },
+ "vietnamese-caramel-chicken": {
+  "photographer": "FOX ^.ᆽ.^= ∫",
+  "photographer_url": "https://www.pexels.com/@fox-58267",
+  "url": "https://www.pexels.com/photo/vietnamese-salad-with-chicken-and-peanuts-37263739/",
+  "alt": "Plate of Vietnamese salad with chicken, carrots, and peanuts served indoors on a metal table.",
+  "match": "good"
+ },
+ "vietnamese-chicken-salad": {
+  "photographer": "FOX ^.ᆽ.^= ∫",
+  "photographer_url": "https://www.pexels.com/@fox-58267",
+  "url": "https://www.pexels.com/photo/vietnamese-salad-with-chicken-and-peanuts-37263739/",
+  "alt": "Plate of Vietnamese salad with chicken, carrots, and peanuts served indoors on a metal table.",
+  "match": "good"
+ },
+ "caramelized-shrimp": {
+  "photographer": "Will Chen",
+  "photographer_url": "https://www.pexels.com/@will-chen-246349093",
+  "url": "https://www.pexels.com/photo/taiwanese-shrimps-with-green-onions-and-corn-36942418/",
+  "alt": "Deliciously seasoned shrimps served with green onions and corn, showcasing Taiwanese cuisine.",
+  "match": "good"
+ },
+ "shakshuka-85": {
+  "photographer": "Valeria Boltneva",
+  "photographer_url": "https://www.pexels.com/@valeriya",
+  "url": "https://www.pexels.com/photo/delicious-shakshuka-skillet-with-cheese-and-herbs-35672957/",
+  "alt": "Appetizing shakshuka in a skillet, topped with cheese and fresh herbs, perfect for a hearty breakfast.",
+  "match": "good"
+ },
+ "garlic-butter-shrimp": {
+  "photographer": "Vilnis Husko",
+  "photographer_url": "https://www.pexels.com/@vhusko",
+  "url": "https://www.pexels.com/photo/shrimp-dish-with-sliced-lemon-and-dill-garnish-8633745/",
+  "alt": "Close-up of flavorful shrimp garnished with garlic, lemon, and dill.",
+  "match": "good"
+ },
+ "beef-and-broccoli-87": {
+  "photographer": "Ivan Georgiev",
+  "photographer_url": "https://www.pexels.com/@ivandesignx",
+  "url": "https://www.pexels.com/photo/close-up-of-beef-and-broccoli-stir-fry-dish-31867670/",
+  "alt": "Delicious beef and broccoli stir fry with vibrant colors and appetizing texture.",
+  "match": "good"
+ },
+ "caprese-salad": {
+  "photographer": "Shameel mukkath",
+  "photographer_url": "https://www.pexels.com/@shameel-mukkath-3421394",
+  "url": "https://www.pexels.com/photo/sliced-tomatoes-and-mozzarella-cheese-on-wooden-board-5639959/",
+  "alt": "Appetizing Caprese salad with mozzarella, tomatoes, and basil on a wooden board.",
+  "match": "good"
+ },
+ "spicy-peanut-noodles": {
+  "photographer": "Piotr Arnoldes",
+  "photographer_url": "https://www.pexels.com/@piotr-arnoldes-7862031",
+  "url": "https://www.pexels.com/photo/delicious-asian-pasta-with-meat-slices-and-peanuts-6488937/",
+  "alt": "Tasty black noodles with juicy meat pieces and peanuts under red chili pepper and lime slice in plate",
+  "match": "good"
+ }
+}
