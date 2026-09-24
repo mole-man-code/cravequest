@@ -42,13 +42,15 @@ function renderHud(){
 }
 function showResult(r,kick){
   const el=$("result");el.hidden=false;
-  el.innerHTML=`<div class="rcard"><div><div class="rk">${kick}</div><h2>${r.n}</h2><div class="meta">${r.c} · ${r.t} min · effort ${r.e} of 3</div></div><button class="btn" id="rview">See the recipe</button></div>`;
+  const thumb=PAGES[r.id]?`<img class="rthumb" alt="" loading="lazy" src="img/${PAGES[r.id]}-1x1.jpg" onerror="this.remove()">`:"";
+  el.innerHTML=`<div class="rcard"><div class="rcardMain">${thumb}<div><div class="rk">${kick}</div><h2>${r.n}</h2><div class="meta">${r.c} · ${r.t} min · effort ${r.e} of 3</div></div></div><button class="btn" id="rview">See the recipe</button></div>`;
   $("rview").onclick=()=>openRecipe(r);
   el.scrollIntoView({behavior:"smooth",block:"nearest"});
 }
 function openRecipe(r){
   const done=S.cooked[r.id];
-  $("dbody").innerHTML=`<div class="dhead"><span class="kick">${r.c}</span><button class="btn ghost" id="dx">Close</button></div>
+  const photo=PAGES[r.id]?`<figure class="dphoto"><img alt="${r.n}" loading="lazy" src="img/${PAGES[r.id]}-4x3.jpg" onerror="this.closest('figure').remove()"></figure>`:"";
+  $("dbody").innerHTML=`${photo}<div class="dhead"><span class="kick">${r.c}</span><button class="btn ghost" id="dx">Close</button></div>
   <h2>${r.n}</h2>
   <div class="dmeta"><span>${r.t} min</span><span>${PROT[r.p]}</span><span>${r.veg?"Vegetarian":"Contains meat or fish"}</span><span>Effort ${r.e} of 3</span></div>
   <div class="rate" id="rate"></div>
