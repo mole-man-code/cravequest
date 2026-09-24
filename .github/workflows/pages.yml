@@ -1,0 +1,56 @@
+name: Build and deploy site
+
+on:
+  push:
+    branches: [main]
+  schedule:
+    - cron: "17 8 * * *"      # every day, picks up recipes added in Supabase
+  workflow_dispatch:           # the "Run workflow" button in the Actions tab
+  repository_dispatch:
+    types: [recipes-updated]   # optional: lets Supabase trigger a rebuild instantly
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Pick photos for new recipes (Pexels)
+        env:
+          PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
+        run: node scripts/fetch-images.mjs
+      - name: Save new photos to the repo
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add img
+          if ! git diff --cached --quiet; then
+            git commit -m "Add recipe photos"
+            git push || echo "::warning::Could not save photos to the repo; they will be re-fetched next run."
+          fi
+      - name: Generate recipe pages from Supabase
+        run: node scripts/build.mjs
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
