@@ -52,7 +52,7 @@ ${ld ? `<script type="application/ld+json">${jsonLd(ld)}</script>` : ""}
   </header>
 ${body}
   ${scripts || ""}
-  <footer class="foot"><a href="/">FaceOffFood</a> · <a href="/recipes/">Browse all recipes</a></footer>
+  <footer class="foot"><a href="/">FaceOffFood</a> · <a href="/recipes/">Browse all recipes</a> · <a href="/privacy/">Privacy</a></footer>
 </div>
 </body>
 </html>
@@ -136,6 +136,8 @@ for (const r of all) {
   fs.writeFileSync(path.join(dir, "index.html"), recipePage(r, slugs, all));
 }
 if (fs.existsSync(IMG_DIR)) fs.cpSync(IMG_DIR, path.join(OUT, "img"), { recursive: true });
+const PRIVACY_DIR = path.join(ROOT, "privacy");
+if (fs.existsSync(PRIVACY_DIR)) fs.cpSync(PRIVACY_DIR, path.join(OUT, "privacy"), { recursive: true });
 fs.writeFileSync(path.join(OUT, "recipes", "index.html"), indexPage(all, slugs));
 fs.writeFileSync(path.join(OUT, "recipes", "manifest.json"), JSON.stringify(slugs));
 
